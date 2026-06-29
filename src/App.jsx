@@ -4,9 +4,15 @@ import Form from "./Form";
 import TaskList from "./TaskList";
 import FilterButtons from "./FilterButtons";
 import TaskItem from "./TaskItem";
+import Login from "./Login";
+import Signup from "./Signup";
 
 function App() {
+const [currentPage, setCurrentPage] = useState("login");
 
+const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("isLoggedIn") === "true"
+);
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
@@ -127,7 +133,23 @@ function App() {
     }
 
   };
+if (!isLoggedIn) {
 
+  if (currentPage === "signup") {
+    return (
+      <Signup
+        setCurrentPage={setCurrentPage}
+      />
+    );
+  }
+
+  return (
+    <Login
+      setCurrentPage={setCurrentPage}
+      setIsLoggedIn={setIsLoggedIn}
+    />
+  );
+}
   return (
 
     <div style={styles.page}>
