@@ -1,57 +1,48 @@
+
+import TaskItem from "./TaskItem";
+
 function TaskList({
   tasks,
   toggleTask,
   deleteTask,
 }) {
+
+  const styles = {
+    container: {
+      marginTop: "25px",
+    },
+
+    empty: {
+      textAlign: "center",
+      color: "#777",
+      fontSize: "22px",
+      marginTop: "40px",
+      fontWeight: "bold",
+    },
+  };
+
+  if (tasks.length === 0) {
+    return (
+      <h2 style={styles.empty}>
+        No Tasks Available
+      </h2>
+    );
+  }
+
   return (
-    <div>
+    <div style={styles.container}>
+
       {tasks.map((task) => (
-        <div
+
+        <TaskItem
           key={task.id}
-          style={{
-            margin: "10px",
-            padding: "10px",
-            border: "1px solid black",
-          }}
-        >
-          <h3
-            style={{
-              textDecoration: task.completed
-                ? "line-through"
-                : "none",
-            }}
-          >
-            {task.title}
-          </h3>
+          task={task}
+          toggleTask={toggleTask}
+           deleteTask={deleteTask}
+        />
 
-          <p>Priority: {task.priority}</p>
-
-          <p>
-            Status:{" "}
-            {task.completed
-              ? "Completed"
-              : "Pending"}
-          </p>
-
-          <button
-            onClick={() =>
-              toggleTask(task.id)
-            }
-          >
-            {task.completed
-              ? "Undo"
-              : "Complete"}
-          </button>
-
-          <button
-            onClick={() =>
-              deleteTask(task.id)
-            }
-          >
-            Delete
-          </button>
-        </div>
       ))}
+
     </div>
   );
 }
